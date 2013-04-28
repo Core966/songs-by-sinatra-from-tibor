@@ -1,0 +1,14 @@
+    <nav>
+       <ul>
+         <li><a href="/" title="Home">Home</a></li>
+         <li><a href="/about" title="About">About</a></li>
+         <li><a href="/contact" title="Contact">Contact</a></li>
+         <li><a href="/songs" title="Songs">Songs</a></li>
+         <% if session[:admin] == true %>
+         <li><a href="/logout" title="Logout">Logout</a></li>
+         <b>Logged in as <%= settings.username %></b>
+         <% else %>
+         <li><a href="/login" title="Login">Login</a></li>
+         <% end %>
+       </ul>
+    </nav>
