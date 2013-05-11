@@ -3,6 +3,10 @@ GEM
   specs:
     addressable (2.2.8)
     bcrypt-ruby (3.0.1)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.2)
     daemons (1.1.9)
     data_objects (0.10.12)
       addressable (~> 2.1)
@@ -58,14 +62,18 @@ GEM
     do_sqlite3 (0.10.12)
       data_objects (= 0.10.12)
     eventmachine (1.0.3)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
     fastercsv (1.5.5)
     json (1.7.7)
     json_pure (1.7.7)
+    libv8 (3.11.8.17)
     multi_json (1.7.2)
     pg (0.15.1)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
+    ref (1.0.4)
     sass (3.2.8)
     sinatra (1.4.2)
       rack (~> 1.5, >= 1.5.2)
@@ -74,6 +82,9 @@ GEM
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
     stringex (1.5.1)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -85,6 +96,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coffee-script
   datamapper
   dm-core
   dm-migrations
@@ -94,4 +106,5 @@ DEPENDENCIES
   sass
   sinatra
   sinatra-flash
+  therubyracer
   thin
