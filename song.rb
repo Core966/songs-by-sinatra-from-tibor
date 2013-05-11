@@ -16,6 +16,7 @@ class Song
   property :lyrics, Text
   property :length, Integer
   property :released_on, Date
+  property :like, Integer, :default => 0
   def released_on=date
     super Date.strptime(date, '%m/%d/%Y') #Converts the string entered in the form to be formatted to a date
   end
@@ -78,5 +79,13 @@ delete '/songs/:id' do
   protected!
   find_song.destroy
   redirect to('/songs')
+end
+
+post '/songs/:id/like' do
+  @song = find_song
+  @song.like = @song.like.next #Incrementing the number of likes by one.
+  @song.save
+  redirect to"/songs/#{@song.id}" unless request.xhr?
+  erb :like, :layout => false
 end
 
