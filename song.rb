@@ -1,5 +1,34 @@
+require 'sinatra/base'
 require 'dm-core'
 require 'dm-migrations'
+require 'sass'
+require 'sinatra/flash'
+require './sinatra/auth'
+
+
+
+class SongController < Sinatra::Base
+enable :method_override
+register Sinatra::Flash
+register Sinatra::Auth
+
+module SongHelpers
+  def find_songs
+    @songs = Song.all
+  end
+  def find_song
+    Song.get(params[:id])
+  end
+  def create_song
+    @song = Song.create(params[:song])
+  end
+end
+
+configure do
+  enable :sessions
+  set :username, 'frank'
+  set :password, 'sinatra'
+end
 
 configure :development do
   DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
@@ -26,66 +55,73 @@ DataMapper.finalize
 
 DataMapper.auto_upgrade!
 
-module SongHelpers
-  def find_songs
-    @songs = Song.all
-  end
-  def find_song
-    Song.get(params[:id])
-  end
-  def create_song
-    @song = Song.create(params[:song])
-  end
-end
-
 helpers SongHelpers
 
-get '/songs' do
+before do
+  set_title #Anything inside a before filter block will be run before each request.
+end
+
+  def css(*stylesheets) #Helper method to generate html tag for each of the scss files.
+    stylesheets.map do |stylesheet|
+      "<link href=\"/#{stylesheet}.css\" media=\"screen, projection\" rel=\"stylesheet\" />"
+    end.join
+  end
+  
+  def current?(path='/') #This will return the path of the page that’s currently being visited, relative to the root URL
+    (request.path==path || request.path==path+'/') ? "current" : nil
+  end
+  
+  def set_title
+    @title ||= "Songs By Sinatra"
+  end
+  
+get '/' do
   find_songs
   erb :songs
 end
 
-get '/songs/new' do
+get '/new' do
   protected!
   @song = Song.new
   erb :new_song
 end
 
-get '/songs/:id' do
+get '/:id' do
   @song = find_song
   erb :show_song
 end
 
-post '/songs' do
+post '/' do
   protected!
   song = create_song
-  redirect to("/songs/#{song.id}")
+  redirect to("/#{song.id}")
 end
 
-get '/songs/:id/edit' do
+get '/:id/edit' do
   protected!
   @song = find_song
   erb :edit_song
 end
 
-put '/songs/:id' do
+put '/:id' do
   protected!
   song = find_song
   song.update(params[:song])
-  redirect to("/songs/#{song.id}")
+  redirect to("/#{song.id}")
 end
 
-delete '/songs/:id' do
+delete '/:id' do
   protected!
   find_song.destroy
-  redirect to('/songs')
+  redirect to('/')
 end
 
-post '/songs/:id/like' do
+post '/:id/like' do
   @song = find_song
   @song.like = @song.like.next #Incrementing the number of likes by one.
   @song.save
-  redirect to"/songs/#{@song.id}" unless request.xhr?
+  redirect to"/#{@song.id}" unless request.xhr?
   erb :like, :layout => false
 end
 
+end
