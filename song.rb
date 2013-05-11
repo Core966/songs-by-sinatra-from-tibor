@@ -9,12 +9,6 @@ configure :production do
   DataMapper.setup(:default, ENV['DATABASE_URL'])
 end
 
-configure do
-  enable :sessions
-  set :username, 'Frank'
-  set :password, 'Sinatra'
-end
-
 class Song
   include DataMapper::Resource
   property :id, Serial
@@ -51,7 +45,7 @@ get '/songs' do
 end
 
 get '/songs/new' do
-  halt(401,'Not Authorized') unless session[:admin]
+  protected!
   @song = Song.new
   erb :new_song
 end
@@ -62,52 +56,27 @@ get '/songs/:id' do
 end
 
 post '/songs' do
-  if song = create_song
-  flash[:notice] = "Song successfully added"
-  else
-  flash[:notice] = "Song adding unsuccessful"
-  end
+  protected!
+  song = create_song
   redirect to("/songs/#{song.id}")
 end
 
 get '/songs/:id/edit' do
+  protected!
   @song = find_song
   erb :edit_song
 end
 
 put '/songs/:id' do
+  protected!
   song = find_song
-  if song.update(params[:song])
-  flash[:notice] = "Song successfully updated"
-  else
-  flash[:notice] = "Song updating unsuccessful" 
-  end
+  song.update(params[:song])
   redirect to("/songs/#{song.id}")
 end
 
 delete '/songs/:id' do
-  if find_song.destroy
-  flash[:notice] = "Song deleted"
-  else
-  flash[:notice] = "Song deletion unsuccessful"
-  end
+  protected!
+  find_song.destroy
   redirect to('/songs')
 end
 
-get '/login' do
-  erb :login
-end
-
-post '/login' do
-  if params[:username] == settings.username && params[:password] == settings.password
-    session[:admin] = true
-    redirect to('/songs')
-  else
-    erb :login
-  end
-end
-
-get '/logout' do
-  session.clear
-  redirect to('/login')
-end

@@ -2,9 +2,15 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/flash'
 require 'sass'
-require 'pony'
+require 'v8'
+require 'coffee-script'
+
 
 get('/styles.css'){ scss :styles }
+
+get('/javascripts/application.js'){ coffee :application }
+
+require './sinatra/auth'
 
 require './song'
 
