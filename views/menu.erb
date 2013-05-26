@@ -4,11 +4,12 @@
          <li><a href="/about" class="<%= current?("/about") %>" title="About">About</a></li>
          <li><a href="/contact" class="<%= current?("/contact") %>" title="Contact">Contact</a></li>
          <li><a href="/songs" class="<%= current?("/songs") %>" title="Songs">Songs</a></li>
-         <% if session[:admin] == true %>
-         <li><a href="/logout" title="Logout">Logout</a></li>
-         <b>Logged in as <%= settings.username %></b>
+         <li><a href="/users" class="<%= current?("/users") %>" title="users">Registration</a></li>
+         <% if env['warden'].authenticated? %>
+         <li><a href="/auth/logout" title="Logout">Logout</a></li>
+         <b>Logged in as <%= env['warden'].user.username %></b> 
          <% else %>
-         <li><a href="/login" title="Login">Login</a></li>
+         <li><a href="/auth/login" title="Login">Login</a></li>
          <% end %>
        </ul>
     </nav>

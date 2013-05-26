@@ -15,7 +15,19 @@
     <%= erb :menu %>
   </header>
   <section>
-    <%= styled_flash %>
+
+    <% if flash.success %>
+    <div style="color:green;">
+      <%= flash.success %>
+    </div>
+    <% end %>
+
+    <% if flash.error %>
+    <div style="color:red;">
+      <%= flash.error %>
+    </div>
+    <% end %>
+    
     <%= yield %>
   </section>
 </body>

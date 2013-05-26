@@ -14,7 +14,8 @@ module Sinatra
       app.helpers Helpers
       app.enable :sessions
       app.set :username => 'frank',
-               :password => 'sinatra'
+               :password => 'sinatra',
+               :user_id => 1
       app.get '/login' do
         erb :login
       end
