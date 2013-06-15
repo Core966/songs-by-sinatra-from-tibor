@@ -76,6 +76,7 @@ GEM
       rack
     rack-protection (1.5.0)
       rack
+    rake (10.0.4)
     ref (1.0.4)
     sass (3.2.8)
     sinatra (1.4.2)
@@ -107,6 +108,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   pg
   rack-flash3
+  rake
   sass
   sinatra
   therubyracer

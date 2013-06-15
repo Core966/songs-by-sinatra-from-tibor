@@ -12,3 +12,4 @@ gem "rack-flash3", require: 'rack/flash'
 gem "coffee-script"
 gem "therubyracer"
 gem "warden"
+gem "rake"
