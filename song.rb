@@ -26,13 +26,9 @@ enable :method_override
     
     post '/' do
       env['warden'].authenticate!
-#      if env['warden'].user.id == #{params[:user_id]}
-          song = create_song
-          redirect to("/#{song.id}")
-#      else
-#          flash.error = "Invalid song creation detected!"
-#          redirect '/'
-#      end
+      song = create_song
+#      like = create_like
+      redirect to("/#{song.id}")
     end
     
     get '/:id/edit' do

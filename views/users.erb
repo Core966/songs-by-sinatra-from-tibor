@@ -1,0 +1,11 @@
+<h1>Users</h1>
+<a href="/users/new">Create a new user</a>
+<% if @users.any? %>
+  <ul id="users">
+    <% @users.each do |user| %>
+       <%= "<li><a href=\"/users/#{user.id}\">#{user.username}</a></li>" %>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No users have been created yet!</p>
+<% end %>

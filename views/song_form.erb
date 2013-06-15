@@ -1,14 +1,13 @@
-<input id="user_id" type="hidden" name="<%="song[user_id]"%>" value="<%= env['warden'].user.id %>">
 <label for="title"> Title:
-<input id="title" type="text" name="<%="song[title]"%>" value="<%="#{@song.title}"%>">
+<input id="title" type="text" name="title" value="<%="#{@song.title}"%>">
 </label>
 <label for="length"> Length:
-<input id="length" type="number" name="<%="song[length]"%>" value="<%="#{@song.length}"%>">
+<input id="length" type="number" name="length" value="<%="#{@song.length}"%>">
 </label>
 <label for="released_on"> Date(mm/dd/yyyy):
-<input id="released_on" type="text" name="<%="song[released_on]"%>" value="<%="#{@song.released_on.strftime("%m/%d/%Y") if @song.released_on}"%>">
+<input id="released_on" type="text" name="released_on" value="<%="#{@song.released_on.strftime("%m/%d/%Y") if @song.released_on}"%>">
 </label>
 <label for="lyrics"> Lyrics:
-<textarea id="lyrics" name="<%="song[lyrics]"%>"><%= @song.lyrics %></textarea>
+<textarea id="lyrics" name="lyrics"><%= @song.lyrics %></textarea>
 </label>
 <input type="submit" value="Save Song">
