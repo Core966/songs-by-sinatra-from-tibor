@@ -17,7 +17,7 @@ class DataModel < Sinatra::Base
       DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
     end
     configure :production do
-      DataMapper.setup(:default, ENV['DATABASE_URL'])
+      DataMapper.setup(:default, "mysql://someuser:somepass@localhost/test")
     end
 
 class User
