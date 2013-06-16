@@ -85,8 +85,6 @@ class User
     end
     
     DataMapper.finalize
-
-    DataMapper.auto_migrate!
     
     if User.count == 0
       @user = User.create(username: "admin")
